@@ -47,9 +47,9 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
   }, [initialPosts, sortType, sortOrder, categoryFilter])
 
   return (
-    <main className="p-6 max-w-6xl mx-auto">
+    <main className="p-6 max-w-6xl mx-auto items-center justify-center w-full">
       {/* Header: voltar + filtros/ordenacao */}
-      <div className="flex flex-wrap justify-between items-center mb-3 gap-2 md:px-5">
+      <div className="flex flex-wrap justify-between items-center mb-3 gap-2 md:px-5 w-full">
         <button
           onClick={() => redirect('/')}
           className="md:text-sm text-xs px-3 py-1 border rounded-lg hover:text-amber-500 transition cursor-pointer"
@@ -110,22 +110,24 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
       </div>
 
       {/* Grid de posts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPosts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}>
-            <article className="rounded-2xl shadow hover:shadow-lg transition p-4 cursor-pointer border hover:scale-105">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="rounded-xl border w-full h-48 object-cover object-top"
-              />
-              <h2 className="text-xl font-semibold mt-3">{post.title}</h2>
-              <p className="text-sm mt-1 text-gray-500">{post.category}</p>
-              <p className="text-sm mt-1 text-gray-500">{post.date}</p>
-              <p className="text-sm mt-1">{post.excerpt}</p>
-            </article>
-          </Link>
-        ))}
+      <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPosts.map((post) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`}>
+              <article className="rounded-2xl shadow hover:shadow-lg transition p-4 cursor-pointer border hover:scale-105">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="rounded-xl border w-full h-48 object-cover object-top"
+                />
+                <h2 className="text-xl font-semibold mt-3">{post.title}</h2>
+                <p className="text-sm mt-1 text-gray-500">{post.category}</p>
+                <p className="text-sm mt-1 text-gray-500">{post.date}</p>
+                <p className="text-sm mt-1">{post.excerpt}</p>
+              </article>
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   )

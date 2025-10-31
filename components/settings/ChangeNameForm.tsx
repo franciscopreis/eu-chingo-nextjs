@@ -31,7 +31,7 @@ export default function ChangeNameForm() {
       >
         <SettingsField
           name="newName"
-          placeholder="Han Shan"
+          placeholder="Novo nome"
           required
           maxLength={15}
         />

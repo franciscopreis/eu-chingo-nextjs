@@ -6,7 +6,7 @@ export default function YarrowStalkTable() {
         principalmente no que diz respeito às linhas fixas que são bem mais
         prováveis.
       </p>
-      <table className="table-base">
+      <table className="table-base lg:text-base text-xs">
         <caption className="sr-only">
           Tabela de probabilidades e significados dos traços do I Ching para o
           método dos talos de milefólio

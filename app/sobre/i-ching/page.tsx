@@ -3,7 +3,7 @@ import Context from '@/components/about/context/IChing'
 
 export default function IChingPage() {
   return (
-    <main className="page-content  min-h-[600px]">
+    <main className="main-dashboard  min-h-[600px]">
       <IChing />
     </main>
   )

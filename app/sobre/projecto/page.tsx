@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function ProjectPage() {
   return (
-    <main className="page-content">
+    <main className="main-dashboard">
       <Project />
     </main>
   )

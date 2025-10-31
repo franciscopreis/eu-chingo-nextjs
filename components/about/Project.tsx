@@ -7,7 +7,7 @@ export default function Project() {
       {/* Primeiro bloco: texto à esquerda, imagem à direita */}
       <h2 className="h2-title ">Chinga comigo, baby</h2>
       <div className="flex flex-col lg:flex-row items-center lg:gap-x-0">
-        <div className="lg:w-1/2 space-y-4">
+        <div className="lg:w-3/5 space-y-4">
           <h2 className="pl-2 h2-title text-left mt-0 pt-0">O contexto</h2>
           <p className="p-primary">
             O meu interesse pelo I Ching começou há mais de dez anos, após
@@ -21,7 +21,7 @@ export default function Project() {
             meus conhecimentos de programação.
           </p>
         </div>
-        <div className="lg:w-1/2 lg:px-2  py-5">
+        <div className="lg:w-2/5 lg:px-2  py-5">
           <Image
             src="/images/svg/robe-guy-png.svg"
             width={755}
@@ -33,9 +33,9 @@ export default function Project() {
       </div>
 
       {/* Segundo bloco: imagem à esquerda, texto à direita */}
-      <div className="flex flex-col lg:flex-row-reverse items-center lg:gap-x-5 justify-between">
-        <div className="lg:w-1/2 space-y-4 flex flex-col">
-          <h2 className="pl-2 h2-title text-left">Abordagem técnica</h2>
+      <div className="flex flex-col lg:flex-row items-center lg:gap-x-5 justify-between">
+        <div className="lg:w-3/5 space-y-4 flex flex-col gap-2">
+          <h2 className="pl-2 h2-title text-left mb-0">Abordagem técnica</h2>
           <p className="p-primary">
             Resumidamente usei Next.js 15, Tailwind CSS e SQLite. Inicialmente,
             usei base de dados local, mas para produção em Vercel mudei para
@@ -44,7 +44,8 @@ export default function Project() {
           <p className="p-primary">
             Não usei nenhum ORM pois queria trabalhar com SQL diretamente.
           </p>
-          <h3 className="text-2xl font-semibold">Funcionalidades</h3>
+
+          <h2 className="pl-2 h2-title text-left mb-0">Funcionalidades</h2>
           <ul className="list-disc list-inside space-y-1 p-primary">
             <li>
               Simulação de consulta de leituras através do método das moedas;
@@ -53,13 +54,13 @@ export default function Project() {
             <li>Guardar, editar e apagar leituras;</li>
             <li>Acesso a textos para cada hexagrama;</li>
             <li>Formulário de contacto;</li>
-            <li>Definições básicas: apagar conta, mudar email e password.</li>
-            <li>Blog simples e informativo para apresentar informações.</li>
+            <li>Definições básicas: apagar conta, mudar email e password;</li>
+            <li>Página de blogue para mostrar algumas informações.</li>
           </ul>
         </div>{' '}
-        <div className="lg:w-1/2 lg:px-2 flex flex-col mx-auto">
+        <div className="lg:w-2/5 lg:px-2 flex flex-col mx-auto">
           <Image
-            src="/images/new/naked-devil.svg"
+            src="/images/new/swordsman.svg"
             width={780}
             height={1192}
             alt="Diagrama I Ching"

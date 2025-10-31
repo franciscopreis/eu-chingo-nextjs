@@ -1,7 +1,5 @@
-'use client'
-
 import { ReactNode } from 'react'
-import LayoutContainer from '@/components/ui/sidebar/LayoutContainer'
+import LayoutContainer from '@/components/ui/layout/LayoutContainer'
 import SidebarWrapper from '@/components/ui/sidebar/SidebarWrapper'
 
 const menuLinks = [

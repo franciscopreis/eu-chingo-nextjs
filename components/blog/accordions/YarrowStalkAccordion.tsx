@@ -1,10 +1,10 @@
-// components/methods/CoinAccordion.tsx
 'use client'
 import { useState } from 'react'
 import AccordionItem from '@/components/ui/AccordionItem'
-import CoinTutorial from './CoinTutorial'
 
-export default function CoinAccordion() {
+import YarrowStalkTutorial from '../tutorials/YarrowStalkTutorial'
+
+export default function YarroStalkAccordion() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -13,7 +13,7 @@ export default function CoinAccordion() {
       isOpen={isOpen}
       onToggle={() => setIsOpen(!isOpen)}
     >
-      <CoinTutorial />
+      <YarrowStalkTutorial />
     </AccordionItem>
   )
 }

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { successResponse, errorResponse } from '@/lib/utils/responses'
 import Stripe from 'stripe'
 
 // Lazy-load do Stripe
@@ -12,29 +12,38 @@ function getStripe() {
   return StripeSDK
 }
 
-// Criar sessão de checkout no Stripe
-
 export async function POST(req: Request) {
-  const stripe = getStripe() // pega a instância do Stripe
-  const { amount } = await req.json()
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  try {
+    const stripe = getStripe()
+    const { amount } = await req.json()
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'eur',
-          product_data: { name: 'Doação para o Eu-Chingo' },
-          unit_amount: Math.round(amount * 100),
+    // Validação do amount
+    if (!amount || typeof amount !== 'number' || amount <= 0) {
+      return errorResponse('Valor de doação inválido', 400)
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: { name: 'Doação para o Eu-Chingo' },
+            unit_amount: Math.round(amount * 100),
+          },
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: `${baseUrl}/status/success/donation`,
-    cancel_url: `${baseUrl}/status/error/donation`,
-  })
+      ],
+      mode: 'payment',
+      success_url: `${baseUrl}/status/success/donation`,
+      cancel_url: `${baseUrl}/status/error/donation`,
+    })
 
-  return NextResponse.json({ url: session.url })
+    return successResponse({ url: session.url })
+  } catch (err) {
+    console.error('Erro ao criar sessão Stripe:', err)
+    return errorResponse('Erro interno do servidor', 500)
+  }
 }

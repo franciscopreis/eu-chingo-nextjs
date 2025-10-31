@@ -5,10 +5,10 @@ Link
 export default function Dashboard() {
   return (
     <section className="main-split space-y-8">
-      <h2 className="h2-title">Bem-vindo ao E-Ching</h2>
+      <h2 className="h2-title">Bem-vindo ao Eu-Chingo</h2>
       <p className="p-primary px-5  mx-auto text-xl">
         Aqui poderás fazer novas leituras, consultar o histórico das mesmas e
-        também tabelas do I Ching.
+        também tabelas de referência dos hexagramas do I Ching.
       </p>
 
       <div className="flex lg:flex-row flex-col items-center gap-1 mx-auto justify-center">

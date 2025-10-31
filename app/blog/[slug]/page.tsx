@@ -7,12 +7,12 @@ import remarkGfm from 'remark-gfm'
 import { getAllPostSlugs, getPostBySlug } from '@/lib/blog/posts'
 
 // Componentes usados dentro dos MDX
-import LineTable from '@/components/about/fundamentals/LineTable'
-import TrigramTable from '@/components/about/fundamentals/TrigramTable'
-import CoinAccordion from '@/components/about/methods/CoinAccordion'
-import CoinTable from '@/components/about/methods/CoinTable'
-import YarrowStalkAccordion from '@/components/about/methods/YarrowStalkAccordion'
-import YarrowStalkTable from '@/components/about/methods/YarrowStalkTable'
+import LineTable from '@/components/blog/tables/LineTable'
+import TrigramTable from '@/components/blog/tables/TrigramTable'
+import CoinAccordion from '@/components/blog/accordions/CoinAccordion'
+import CoinTable from '@/components/blog/tables/CoinTable'
+import YarrowStalkAccordion from '@/components/blog/accordions/YarrowStalkAccordion'
+import YarrowStalkTable from '@/components/blog/tables/YarrowStalkTable'
 
 const components = {
   TrigramTable,

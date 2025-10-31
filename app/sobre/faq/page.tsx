@@ -2,7 +2,7 @@ import Faq from '@/components/about/faq/Faq'
 
 const FaqPage = () => {
   return (
-    <main className="page-content">
+    <main className="main-dashboard">
       <Faq />
     </main>
   )

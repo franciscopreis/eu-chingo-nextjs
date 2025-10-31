@@ -5,7 +5,7 @@ export default function CoinTable() {
         As probabilidades dos métodos das moedas levam, previsivelmente, a
         probabilidades uniformes para cada linha.
       </p>
-      <table className="table-base">
+      <table className="table-base lg:text-base text-xs">
         <caption className="sr-only">
           Probabilidades das linhas para o método das moedas.
         </caption>

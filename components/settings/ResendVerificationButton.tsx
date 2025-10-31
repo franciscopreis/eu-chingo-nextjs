@@ -47,7 +47,7 @@ export default function ResendVerificationButton({
   }
 
   return (
-    <div className="flex justify-center mt-4 mx-auto">
+    <div className="flex flex-col justify-center mt-4 mx-auto gap-2">
       <Button
         text={
           emailVerified
@@ -60,6 +60,9 @@ export default function ResendVerificationButton({
         onClick={handleClick}
         disabled={emailVerified || sent || loading}
       />
+      <p className="text-xs text-gray-500 tracking-wide">
+        Por favor verifique o spam
+      </p>
     </div>
   )
 }

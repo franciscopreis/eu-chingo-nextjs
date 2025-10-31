@@ -1,8 +1,8 @@
 export default function LineTable() {
   return (
     <div className="table-wrapper max-w-fit">
-      <table className="table-base lg:text-sm">
-        <caption className="table-caption mb-0 mt-0">
+      <table className="table-nase lg:text-base text-xs">
+        <caption className="table-caption mb-0 -mt-5">
           Os oito trigramas e os valores e tipos de linhas. Yin para linhas
           quebradas e Yang para linhas inteiras.
         </caption>

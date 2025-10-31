@@ -15,7 +15,7 @@ export default function HexagramCard({ title, hexagram }: HexagramCardProps) {
   return (
     <div className="mb-4 w-full">
       <h2 className="font-semibold md:text-base text-center">{title}</h2>
-      <p className="text-center">
+      <p className="text-center md:pb-0 pb:2">
         {number}. {name}
       </p>
       <p className="text-8xl md:text-9xl pb-5 text-center">{unicode}</p>
