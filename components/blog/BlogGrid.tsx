@@ -52,12 +52,12 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
       <div className="flex flex-wrap justify-between items-center mb-3 gap-2 md:px-5">
         <button
           onClick={() => redirect('/')}
-          className="text-sm px-3 py-1 border rounded-lg hover:text-amber-500 transition cursor-pointer"
+          className="md:text-sm text-xs px-3 py-1 border rounded-lg hover:text-amber-500 transition cursor-pointer"
         >
           ← Voltar
         </button>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex  items-center gap-2">
           {/* Sort Type */}
           <label htmlFor="sortType" className="sr-only">
             Ordenar por
@@ -68,11 +68,11 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
             onChange={(e) =>
               setSortType(e.target.value as 'date' | 'title' | 'category')
             }
-            className="border rounded-lg px-3 py-1 text-sm hover:text-amber-500 transition cursor-pointer"
+            className="border rounded-lg px-3 py-1  hover:text-amber-500 transition cursor-pointer md:text-sm text-xs"
           >
             <option value="date">Data</option>
             <option value="title">Nome</option>
-            <option value="category">Categoria</option>
+            <option value="category">Tema</option>
           </select>
 
           {/* Sort Order */}
@@ -83,7 +83,7 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
             id="sortOrder"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-            className="border rounded-lg px-3 py-1 text-sm hover:text-amber-500 transition cursor-pointer"
+            className="border rounded-lg px-3 py-1 md:text-sm text-xs hover:text-amber-500 transition cursor-pointer"
           >
             <option value="desc">Desc.</option>
             <option value="asc">Asc.</option>
@@ -97,7 +97,7 @@ export default function BlogGrid({ initialPosts }: BlogGridProps) {
             id="categoryFilter"
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="border rounded-lg px-3 py-1 text-sm hover:text-amber-500 transition cursor-pointer"
+            className="border rounded-lg px-3 py-1 md:text-sm text-xs hover:text-amber-500 transition cursor-pointer"
           >
             <option value="all">Tudo</option>
             {categories.map((cat) => (

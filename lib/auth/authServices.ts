@@ -3,10 +3,14 @@
 import bcrypt from 'bcryptjs'
 import type { LoginState, RegisterState } from './authTypes'
 import { loginSchema, registerSchema } from './authSchemas'
-import { sanitizeEmailPasswordName, saveVerificationToken } from './authHelpers'
+import {
+  generateVerificationToken,
+  sanitizeEmailPasswordName,
+} from './authHelpers'
 import { encrypt, setSession } from './session'
 import { hashPassword } from '../utils/crypto'
 import { findUserByEmail, insertUser } from './authRepository'
+import { sendEmailVerification } from '../settings/settingsServices'
 
 const SALT_ROUNDS = 10
 
@@ -86,7 +90,7 @@ export async function registerUser(
   const newUserId = await insertUser(sanitizedEmail, hashed, sanitizedName)
 
   // 🚀 Envia email de verificação logo após o registo
-  await saveVerificationToken(newUserId, sanitizedEmail, sanitizedName)
+  await sendEmailVerification(newUserId, sanitizedEmail, sanitizedName)
 
   // Cria sessão, se quiseres manter login imediato
   const token = await encrypt({

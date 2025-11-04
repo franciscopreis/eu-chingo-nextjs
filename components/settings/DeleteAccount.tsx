@@ -43,8 +43,9 @@ export default function DeleteAccount() {
       )
       await refreshAuth()
       router.refresh()
-      router.push('/')
+      router.push('/status/success/delete-account')
     } catch (err: any) {
+      router.push('/status/error/delete-account')
       Swal.fire('Erro', err.message || 'Erro ao apagar conta', 'error')
     }
   }

@@ -12,7 +12,8 @@ function getStripe() {
   return StripeSDK
 }
 
-// Handler da rota
+// Criar sessão de checkout no Stripe
+
 export async function POST(req: Request) {
   const stripe = getStripe() // pega a instância do Stripe
   const { amount } = await req.json()
@@ -24,15 +25,15 @@ export async function POST(req: Request) {
       {
         price_data: {
           currency: 'eur',
-          product_data: { name: 'Doação ao projeto I Ching' },
+          product_data: { name: 'Doação para o Eu-Chingo' },
           unit_amount: Math.round(amount * 100),
         },
         quantity: 1,
       },
     ],
     mode: 'payment',
-    success_url: `${baseUrl}/success`,
-    cancel_url: `${baseUrl}/cancel`,
+    success_url: `${baseUrl}/status/success/donation`,
+    cancel_url: `${baseUrl}/status/error/donation`,
   })
 
   return NextResponse.json({ url: session.url })

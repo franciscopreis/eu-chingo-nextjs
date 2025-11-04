@@ -53,7 +53,7 @@ export default function IChing() {
   // ]
 
   return (
-    <section className="main-section max-w-2xl justify-center mx-auto">
+    <section className="main-section max-w-2xl justify-center mx-auto px-5">
       {/* Primeira seção (acima da dobra) */}
       <div className="content-split flex-col border-b pb-2">
         <h2 className="h2-title">O contexto e história resumida do I Ching</h2>
@@ -94,11 +94,11 @@ export default function IChing() {
         </div> */}
 
       {/* Grelha de 3 itens */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 max-w-2xl">
+      <div className="grid grid-cols-1  lg:grid-cols-3 gap-6 mt-8 max-w-2xl">
         {items.map((item, index) => (
           <div
             key={index}
-            className="relative w-full rounded-2xl overflow-hidden  hover:shadow-xl transition"
+            className="relative w-full rounded-2xl overflow-hidden   transition"
           >
             {/* Imagem */}
             <Image
@@ -111,13 +111,13 @@ export default function IChing() {
             />
 
             {/* Overlay com botão/texto */}
-            <div className="absolute  inset-0 flex flex-col justify-center items-center opacity-100 lg:opacity-70 hover:opacity-100 transition lg:hover:bg-black/30 ">
+            <div className="absolute  inset-0 flex flex-col justify-center items-center opacity-100 lg:opacity-70  transition  ">
               <h3 className="text-lg font-semibold mb-2 opacity-100">
                 {item.title}
               </h3>
               <a
                 href={item.href}
-                className="px-4 py-2 border rounded-lg hover:scale-105 transition  dark:bg-black text-center justify-center mx-auto bg-white "
+                className="px-4 py-2 border rounded-lg hover:scale-105 transition  dark:bg-black hover:text-amber-500 text-center justify-center mx-auto bg-white "
               >
                 {item.buttonText}
               </a>

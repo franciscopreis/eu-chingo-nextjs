@@ -42,7 +42,7 @@ export default function Faq() {
         <>
           Tradicionalmente, uma consulta envolve formular uma pergunta e gerar
           um hexagrama (figura composta por seis linhas inteiras ou partidas),
-          geralmente através de um dos métodos ({' '}
+          geralmente através de um dos métodos (
           <a href="/blog/metodo_das_moedas">
             <u>método das moedas</u>
           </a>{' '}

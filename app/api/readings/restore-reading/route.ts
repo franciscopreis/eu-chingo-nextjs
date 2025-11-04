@@ -4,6 +4,9 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { insertUserReading } from '@/lib/readings/readingsRepository'
 import { successResponse, errorResponse } from '@/lib/utils/responses'
 
+// POST /api/readings/restore-reading
+// Restaura uma leitura para o utilizador autenticado (login ou registo)
+
 export async function POST(req: Request) {
   try {
     const user = await getCurrentUser()
@@ -17,8 +20,9 @@ export async function POST(req: Request) {
     if (!question || !lines || !hexagrams) {
       return errorResponse('Dados incompletos', 400)
     }
+
     const hexagramRaw = hexagrams.hexagramRaw ?? null
-    // Usa o readingsRepository para inserir a leitura
+
     const reading = await insertUserReading({
       user_id: user.id,
       question,

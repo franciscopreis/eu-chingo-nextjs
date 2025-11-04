@@ -68,3 +68,34 @@ export async function insertContactMessage(
 export async function deleteUser(userId: number) {
   return await db.run('DELETE FROM users WHERE id = ?', [userId])
 }
+
+export async function setVerificationToken(
+  userId: number,
+  token: string,
+  expires: string
+) {
+  return await db.run(
+    'UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?',
+    [token, expires, userId]
+  )
+}
+
+export async function findUserByVerificationToken(token: string) {
+  return await db.get(
+    `SELECT * FROM users
+     WHERE verification_token = ?
+       AND verification_token_expires > datetime('now')`,
+    [token]
+  )
+}
+
+export async function verifyUserEmail(userId: number) {
+  return await db.run(
+    `UPDATE users
+       SET emailVerified = 1,
+           verification_token = NULL,
+           verification_token_expires = NULL
+     WHERE id = ?`,
+    [userId]
+  )
+}

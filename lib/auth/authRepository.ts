@@ -1,6 +1,8 @@
+// lib/repositories/authRepository.ts
 import db from '@/data/db/db'
 import { userSchema } from './authSchemas'
 import type { User } from './authTypes'
+import bcrypt from 'bcryptjs'
 
 export async function findUserByEmail(email: string): Promise<User | null> {
   const raw = await db.get<User>('SELECT * FROM users WHERE email = ?', [email])
@@ -36,4 +38,25 @@ export async function insertUser(
     [email, hashedPassword, name, new Date().toISOString()]
   )
   return Number(result.lastInsertRowid)
+}
+
+export async function getUserPassword(userId: string) {
+  return await db.get<{ password: string }>(
+    'SELECT password FROM users WHERE id = ?',
+    [userId]
+  )
+}
+
+export async function deleteUser(userId: string) {
+  return await db.run('DELETE FROM users WHERE id = ?', [userId])
+}
+
+export async function verifyPassword(
+  userId: string,
+  password: string
+): Promise<boolean> {
+  const user = await getUserPassword(userId)
+  if (!user) return false
+
+  return await bcrypt.compare(password, user.password)
 }

@@ -5,12 +5,15 @@ import { validateBinaryMatch } from '@/lib/hexagram/helpers'
 import { getMatchingHexagrams } from '@/lib/hexagram/hexagramServices'
 import { successResponse, errorResponse } from '@/lib/utils/responses'
 
+// POST /api/hexagram/match
+// Este endpoint recebe um corpo JSON com dois arrays de binários (6 valores entre 0 e 1) representando dois conjuntos de linhas de hexagramas.
+// Retorna os hexagramas correspondentes aos dois conjuntos fornecidos.
 export async function POST(req: Request) {
   try {
     const body = await req.json()
 
     // Validar binários
-    const binaries = validateBinaryMatch(body) // deve retornar { binary1, binary2 }
+    const binaries = validateBinaryMatch(body)
 
     // Buscar hexagramas correspondentes
     const matches = await getMatchingHexagrams(binaries)

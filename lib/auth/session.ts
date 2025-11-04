@@ -109,8 +109,3 @@ export async function getCurrentUser(): Promise<CurrentUser> {
 export async function logoutUser() {
   await setSession('')
 }
-
-// Gerar token único para verificação de email
-export async function generateVerificationToken() {
-  return crypto.randomBytes(32).toString('hex')
-}

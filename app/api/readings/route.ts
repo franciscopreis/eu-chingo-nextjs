@@ -12,8 +12,9 @@ import {
 } from '@/lib/readings/readingsRepository'
 import { getCurrentUser } from '@/lib/auth/session'
 
-// GET /api/readings - Retorna todas as leituras do utilizador autenticado
-// POST /api/readings - Cria uma nova leitura para o utilizador autenticado
+// GET /api/readings
+// Retorna todas as leituras do utilizador autenticado
+
 export async function GET() {
   try {
     const user = await getCurrentUser()
@@ -29,7 +30,8 @@ export async function GET() {
     return errorResponse({ error: message }, 500)
   }
 }
-
+// POST /api/readings
+// Cria uma nova leitura para o utilizador autenticado
 export async function POST(req: Request) {
   try {
     const user = await getCurrentUser()
