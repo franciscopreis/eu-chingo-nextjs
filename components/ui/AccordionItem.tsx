@@ -9,14 +9,13 @@ type AccordionItemProps = {
   children: ReactNode
 }
 
-// ✅ NÃO incluas "ref" aqui — o forwardRef já o injeta automaticamente
 const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ title, isOpen, onToggle, children }, ref) => {
     return (
-      <div ref={ref} className="border rounded-md w-full pb-0">
+      <div ref={ref} className="border rounded-md w-full">
         {/* Cabeçalho */}
         <div
-          className={`w-full p-2 mb-0 font-semibold flex justify-between items-center hover:bg-gray-300 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden text-center ${
+          className={`w-full p-2 font-semibold flex justify-between items-center hover:bg-gray-300 dark:hover:bg-stone-800 cursor-pointer min-w-0 overflow-hidden text-center ${
             isOpen ? 'border-b' : ''
           }`}
           onClick={onToggle}
@@ -24,13 +23,16 @@ const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
           <div className="flex-1 break-smart min-w-0 text-sm">{title}</div>
         </div>
 
-        {/* Conteúdo */}
+        {/* Wrapper de animação — SEM margens nem padding dinâmicos */}
         <div
-          className={`transition-all duration-300 overflow-hidden ${
-            isOpen ? 'px-2 m-3' : 'p-0'
+          className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+            isOpen ? 'max-h-[3000px]' : 'max-h-0'
           }`}
         >
-          {isOpen && <div className="mt-0 break-smart min-w-0">{children}</div>}
+          {/* Aqui sim o padding interno */}
+          <div className="px-5 py-3 text-sm leading-relaxed tracking-wide break-smart min-w-0">
+            {children}
+          </div>
         </div>
       </div>
     )
@@ -38,5 +40,4 @@ const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
 )
 
 AccordionItem.displayName = 'AccordionItem'
-
 export default AccordionItem

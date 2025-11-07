@@ -2,6 +2,7 @@ import { findUserByEmail } from './authRepository'
 import { randomBytes } from 'crypto'
 import sendgrid from '@sendgrid/mail'
 import { setVerificationToken } from '../settings/settingsRepository'
+import bcrypt from 'bcryptjs'
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY!)
 
@@ -31,6 +32,11 @@ export function generateVerificationToken() {
   return { token, expires }
 }
 
-// Gera token único para verificação de email
-// Guarda o token na DB
-// Envia email de verificação
+export async function comparePasswords(plain: string, hash: string) {
+  const valid = await bcrypt.compare(plain, hash)
+  if (!valid) throw new Error('Password incorreta')
+}
+
+export async function hashPassword(password: string, saltRounds = 10) {
+  return bcrypt.hash(password, saltRounds)
+}

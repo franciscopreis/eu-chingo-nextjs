@@ -6,30 +6,30 @@ export type DBUser = {
   password: string
   name?: string | null
   createdAt: string
-  welcomeEmailSent?: boolean
+
   emailVerified?: boolean
 }
 
-export async function getUserById(userId: number): Promise<DBUser | undefined> {
-  return await db.get<DBUser>(
-    'SELECT id, email, password, name, createdAt, welcomeEmailSent, emailVerified FROM users WHERE id = ?',
-    [userId]
-  )
+export async function getUserById(id: number) {
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [id])
+
+  if (!user) return null
+
+  return {
+    ...user,
+    emailVerified: Boolean(user.emailVerified),
+  }
 }
 
-export async function markWelcomeEmailSent(userId: number) {
-  return await db.run('UPDATE users SET welcomeEmailSent = 1 WHERE id = ?', [
-    userId,
-  ])
-}
+export async function getUserByEmail(email: string) {
+  const user = await db.get('SELECT * FROM users WHERE email = ?', [email])
 
-export async function getUserByEmail(
-  email: string
-): Promise<DBUser | undefined> {
-  return await db.get<DBUser>(
-    'SELECT id, email, password, name, createdAt, emailVerified FROM users WHERE email = ?',
-    [email]
-  )
+  if (!user) return null
+
+  return {
+    ...user,
+    emailVerified: Boolean(user.emailVerified),
+  }
 }
 
 export async function updateEmail(userId: number, email: string) {
@@ -81,12 +81,16 @@ export async function setVerificationToken(
 }
 
 export async function findUserByVerificationToken(token: string) {
-  return await db.get(
-    `SELECT * FROM users
-     WHERE verification_token = ?
-       AND verification_token_expires > datetime('now')`,
-    [token]
-  )
+  const user = await db.get('SELECT * FROM users WHERE verificationToken = ?', [
+    token,
+  ])
+
+  if (!user) return null
+
+  return {
+    ...user,
+    emailVerified: Boolean(user.emailVerified),
+  }
 }
 
 export async function verifyUserEmail(userId: number) {

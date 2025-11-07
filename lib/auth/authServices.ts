@@ -1,16 +1,13 @@
 // authServices.ts
 'use server'
 import bcrypt from 'bcryptjs'
-import type { LoginState, RegisterState } from './authTypes'
+import type { LoginState, RegisterState, SafeUser } from './authTypes'
 import { loginSchema, registerSchema } from './authSchemas'
-import {
-  generateVerificationToken,
-  sanitizeEmailPasswordName,
-} from './authHelpers'
-import { encrypt, setSession } from './session'
-import { hashPassword } from '../utils/crypto'
-import { findUserByEmail, insertUser } from './authRepository'
+import { hashPassword, sanitizeEmailPasswordName } from './authHelpers'
+import { decrypt, encrypt, setSession } from './session'
+import { findUserByEmail, findUserById, insertUser } from './authRepository'
 import { sendEmailVerification } from '../settings/settingsServices'
+import { cookies } from 'next/headers'
 
 const SALT_ROUNDS = 10
 
@@ -102,4 +99,34 @@ export async function registerUser(
   await setSession(token)
 
   return { errors: {}, success: true, userId: newUserId }
+}
+
+export async function getCurrentUserFromDB(): Promise<SafeUser | null> {
+  const store = await cookies()
+  const token = store.get('session')?.value
+  if (!token) return null
+
+  const payload = await decrypt(token)
+  if (!payload?.userId) return null
+
+  const user = await findUserById(payload.userId)
+  if (!user) return null
+
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    emailVerified: Boolean(user.emailVerified),
+  }
+}
+
+// Atualiza cookie após mudar emailVerified
+export async function updateSessionWithVerified(user: SafeUser) {
+  const token = await encrypt({
+    userId: user.id,
+    email: user.email,
+    name: user.name,
+    emailVerified: Boolean(user.emailVerified),
+  })
+  await setSession(token)
 }

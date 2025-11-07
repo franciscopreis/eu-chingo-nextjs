@@ -22,12 +22,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const refreshAuth = async () => {
     setLoading(true)
     try {
-      // Chama uma API route no cliente
-      const response = await fetch('/api/auth/me')
-
+      const response = await fetch('/api/auth/me', { cache: 'no-store' })
       if (response.ok) {
-        const currentUser = await response.json()
-        setUser(currentUser)
+        const { data } = await response.json()
+        setUser(data) // ← aqui está a diferença
         setIsAuthenticated(true)
       } else {
         setUser(null)

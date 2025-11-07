@@ -16,5 +16,6 @@ export async function GET(req: NextRequest) {
     )
   } catch (err: any) {
     console.error('Erro na verificação de email:', err)
+    return errorResponse(err?.message || 'Erro interno', 500) // ← precisa de retornar algo
   }
 }

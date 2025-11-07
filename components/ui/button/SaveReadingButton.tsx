@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth/session'
 import Button from '@/components/ui/button/Button'
 import Swal from 'sweetalert2'
+import { useReading } from '@/context/ReadingContext'
 
 export default function SaveReadingButton({ onSave }: { onSave: () => void }) {
   const [user, setUser] = useState<{ id: number; email: string } | null>(null)
   const router = useRouter()
+  const { saveToLocalStorageNow } = useReading()
 
   useEffect(() => {
     async function fetchUser() {
@@ -20,9 +22,16 @@ export default function SaveReadingButton({ onSave }: { onSave: () => void }) {
 
   const handleClick = async () => {
     if (!user) {
-      // Garante que leitura guest está no localStorage
+      // Atualiza o estado da leitura
       onSave()
 
+      // Delay para garantir que o estado React atualizou
+      await new Promise((resolve) => setTimeout(resolve, 100))
+
+      // Forçar a gravação no localStorage
+      saveToLocalStorageNow()
+
+      // Pergunta ao user
       const res = await Swal.fire({
         title: 'A tua sessão não está iniciada',
         text: 'Para guardar a leitura precisas de criar conta ou fazer login.',
@@ -32,9 +41,9 @@ export default function SaveReadingButton({ onSave }: { onSave: () => void }) {
         confirmButtonText: 'Registo',
         denyButtonText: 'Login',
         cancelButtonText: 'Cancelar',
-        confirmButtonColor: 'gray', // cinzento
-        denyButtonColor: 'gray', // cinzento
-        cancelButtonColor: '#DC2626', // vermelho
+        confirmButtonColor: 'gray',
+        denyButtonColor: 'gray',
+        cancelButtonColor: '#DC2626',
       })
 
       if (res.isConfirmed) router.push('/registo')
@@ -42,7 +51,7 @@ export default function SaveReadingButton({ onSave }: { onSave: () => void }) {
       return
     }
 
-    // User logado: salva direto na BD
+    // ✅ User autenticado: grava direto
     onSave()
   }
 

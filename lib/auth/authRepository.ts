@@ -1,4 +1,3 @@
-// lib/repositories/authRepository.ts
 import db from '@/data/db/db'
 import { userSchema } from './authSchemas'
 import type { User } from './authTypes'
@@ -8,11 +7,17 @@ export async function findUserByEmail(email: string): Promise<User | null> {
   const raw = await db.get<User>('SELECT * FROM users WHERE email = ?', [email])
   if (!raw) return null
 
-  const parsed = userSchema.safeParse(raw)
+  // Converter números → booleanos antes de validar
+  const parsed = userSchema.safeParse({
+    ...raw,
+    emailVerified: Boolean(raw.emailVerified),
+  })
+
   if (!parsed.success) {
     console.error(parsed.error.format())
     return null
   }
+
   return parsed.data
 }
 
@@ -20,11 +25,16 @@ export async function findUserById(id: number): Promise<User | null> {
   const raw = await db.get<User>('SELECT * FROM users WHERE id = ?', [id])
   if (!raw) return null
 
-  const parsed = userSchema.safeParse(raw)
+  const parsed = userSchema.safeParse({
+    ...raw,
+    emailVerified: Boolean(raw.emailVerified),
+  })
+
   if (!parsed.success) {
     console.error(parsed.error.format())
     return null
   }
+
   return parsed.data
 }
 
@@ -47,16 +57,47 @@ export async function getUserPassword(userId: string) {
   )
 }
 
-export async function deleteUser(userId: string) {
-  return await db.run('DELETE FROM users WHERE id = ?', [userId])
+export async function updateEmailVerified(userId: number, verified: boolean) {
+  await db.run('UPDATE users SET emailVerified = ? WHERE id = ?', [
+    verified ? 1 : 0,
+    userId,
+  ])
 }
 
-export async function verifyPassword(
-  userId: string,
-  password: string
-): Promise<boolean> {
-  const user = await getUserPassword(userId)
-  if (!user) return false
+export async function setVerificationToken(
+  userId: number,
+  token: string,
+  expires: string
+) {
+  await db.run(
+    'UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?',
+    [token, expires, userId]
+  )
+}
 
-  return await bcrypt.compare(password, user.password)
+export async function findUserByVerificationToken(token: string) {
+  const user = await db.get(
+    `SELECT * FROM users
+     WHERE verification_token = ?
+       AND verification_token_expires > datetime('now')`,
+    [token]
+  )
+
+  if (!user) return null
+
+  return {
+    ...user,
+    emailVerified: Boolean(user.emailVerified),
+  }
+}
+
+export async function verifyUserEmail(userId: number) {
+  await db.run(
+    `UPDATE users
+       SET emailVerified = 1,
+           verification_token = NULL,
+           verification_token_expires = NULL
+     WHERE id = ?`,
+    [userId]
+  )
 }

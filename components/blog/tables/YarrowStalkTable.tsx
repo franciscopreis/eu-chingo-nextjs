@@ -34,7 +34,12 @@ export default function YarrowStalkTable() {
 
             <td className="border text-center px-4 py-3  font-mono ">━━x━━</td>
           </tr>
+          <tr className="border">
+            <td className="border text-center px-4 py-3   font-medium">7</td>
+            <td className="border text-center px-4 py-3  ">5/16</td>
 
+            <td className="border text-center px-4 py-3  "> ━━━━━</td>
+          </tr>
           <tr className="border">
             <td className="border text-center px-4 py-3  font-medium">8</td>
             <td className="border text-center px-4 py-3  ">7/16</td>
@@ -47,13 +52,6 @@ export default function YarrowStalkTable() {
             <td className="border text-center px-4 py-3  ">3/16</td>
 
             <td className="border text-center px-4 py-3  font-mono ">━━o━━</td>
-          </tr>
-
-          <tr className="border">
-            <td className="border text-center px-4 py-3   font-medium">7</td>
-            <td className="border text-center px-4 py-3  ">5/16</td>
-
-            <td className="border text-center px-4 py-3  "> ━━━━━</td>
           </tr>
         </tbody>
       </table>

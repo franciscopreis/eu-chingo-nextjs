@@ -178,13 +178,6 @@ export default function SettingsDisplay() {
             <DeleteAccount />
           </AccordionItem>
         </div>
-
-        {/* {userId && (
-          <SendWelcomeButton
-            userId={userId}
-            alreadySent={user.welcomeEmailSent}
-          />
-        )} */}
       </div>
     </>
   )

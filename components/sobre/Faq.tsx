@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import AccordionItem from '../../ui/AccordionItem'
 import Image from 'next/image'
+import AccordionItem from '../ui/AccordionItem'
 
 export default function Faq() {
   const faqs = [
@@ -215,40 +215,17 @@ export default function Faq() {
   }
 
   return (
-    <section className="main-split space-y-8">
-      <h2 className="h2-title text-center lg:mb-5">Perguntas e respostas</h2>
-
-      <div className="flex flex-col lg:flex-row gap-8 max-w-4xl mx-auto">
-        {/* Conteúdo principal */}
-        <div className="flex-1">
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                title={faq.question}
-                isOpen={openIndex === index}
-                onToggle={() => toggleIndex(index)}
-              >
-                <div className="text-sm leading-relaxed p-primary">
-                  {faq.answer}
-                </div>
-              </AccordionItem>
-            ))}
-          </div>
-        </div>
-
-        {/* Imagem lateral */}
-        <div className="lg:w-80 flex justify-center">
-          <div className="relative w-64 h-96 lg:w-80 lg:h-[500px]">
-            <Image
-              src="/images/svg/lady-png.svg"
-              alt="Ilustração de uma mulher chinesa a segurar um longo vestido e com o cabelo adornado de flores"
-              fill
-              className="object-contain hover:scale-105 transition-transform duration-300 dark:invert"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className="space-y-4 max-w-150">
+      {faqs.map((faq, index) => (
+        <AccordionItem
+          key={index}
+          title={faq.question}
+          isOpen={openIndex === index}
+          onToggle={() => toggleIndex(index)}
+        >
+          <div className="text-sm leading-relaxed p-primary">{faq.answer}</div>
+        </AccordionItem>
+      ))}
+    </div>
   )
 }

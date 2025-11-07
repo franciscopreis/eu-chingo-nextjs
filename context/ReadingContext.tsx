@@ -1,4 +1,3 @@
-// context/ReadingContext.tsx
 'use client'
 
 import React, {
@@ -6,6 +5,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useCallback,
   ReactNode,
 } from 'react'
 import type {
@@ -23,6 +23,7 @@ interface ReadingContextType {
   hexagrams: BinaryMatchHexagramRawOutput | null
   setHexagrams: (hexagrams: BinaryMatchHexagramRawOutput | null) => void
   clearReading: () => void
+  saveToLocalStorageNow: () => void // 👈 novo método
 }
 
 const ReadingContext = createContext<ReadingContextType | undefined>(undefined)
@@ -33,31 +34,60 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<Line[] | null>(null)
   const [hexagrams, setHexagrams] =
     useState<BinaryMatchHexagramRawOutput | null>(null)
+  const [hydrated, setHydrated] = useState(false)
 
-  // Hydratar do localStorage no mount
+  // Hidratar do localStorage
   useEffect(() => {
-    const guestReading = localStorage.getItem('guestReading')
-    if (guestReading) {
-      try {
+    try {
+      const guestReading = localStorage.getItem('guestReading')
+      if (guestReading) {
         const data = JSON.parse(guestReading)
         setQuestion(data.question || '')
         setNotes(data.notes || '')
         setLines(data.lines || null)
         setHexagrams(data.hexagrams || null)
-      } catch (err) {
-        console.error('Erro ao recuperar leitura:', err)
       }
+    } catch (err) {
+      console.error('Erro ao recuperar leitura:', err)
+    } finally {
+      setHydrated(true)
     }
   }, [])
 
-  // Persistir automaticamente
+  // Persistir automaticamente (depois de montado)
   useEffect(() => {
-    if (hexagrams || question.trim() || notes.trim()) {
+    if (!hydrated) return
+
+    const hasData =
+      (question && question.trim() !== '') ||
+      (notes && notes.trim() !== '') ||
+      (lines && lines.length > 0) ||
+      !!hexagrams
+
+    if (hasData) {
+      const readingData = { question, notes, lines, hexagrams }
+      try {
+        localStorage.setItem('guestReading', JSON.stringify(readingData))
+      } catch (err) {
+        console.error('Erro ao gravar leitura no localStorage:', err)
+      }
+    } else {
+      localStorage.removeItem('guestReading')
+    }
+  }, [hydrated, question, notes, lines, hexagrams])
+
+  // Grava imediatamente (usado antes de redirect/login)
+  const saveToLocalStorageNow = useCallback(() => {
+    try {
       const readingData = { question, notes, lines, hexagrams }
       localStorage.setItem('guestReading', JSON.stringify(readingData))
+      console.log('[save guestReading ->', readingData)
+    } catch (err) {
+      console.error('Erro ao gravar leitura no localStorage:', err)
     }
-  }, [hexagrams, question, notes, lines])
+  }, [question, notes, lines, hexagrams])
 
+  // Limpa tudo
   const clearReading = () => {
     setQuestion('')
     setNotes('')
@@ -78,6 +108,7 @@ export function ReadingProvider({ children }: { children: ReactNode }) {
         hexagrams,
         setHexagrams,
         clearReading,
+        saveToLocalStorageNow, // 👈 incluído aqui
       }}
     >
       {children}

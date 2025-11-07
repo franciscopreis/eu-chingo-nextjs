@@ -20,7 +20,9 @@ export default function SequentialHexagram() {
 
   return (
     <div className="">
-      <span className="font-serif select-none font-bold">{hexagram}</span>
+      <span className="font-serif select-none font-bold opacity-100">
+        {hexagram}
+      </span>
     </div>
   )
 }

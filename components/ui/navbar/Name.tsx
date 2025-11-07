@@ -49,6 +49,7 @@ const Name = () => {
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center gap-1 font-medium text-sm text-primary"
+        aria-label="Menu"
       >
         <User className="text-primary lg:hidden" />
         <span className="hidden lg:inline">Olá, {displayName}!</span>
@@ -82,6 +83,7 @@ const Name = () => {
 
           <button
             onClick={handleLogout}
+            aria-label="Terminar sessão"
             className="block w-full text-left px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 text-red-600 dark:text-red-400"
           >
             Terminar sessão

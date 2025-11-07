@@ -6,6 +6,7 @@ export const userSchema = z.object({
   name: z.string(),
   password: z.string(),
   createdAt: z.string(),
+  emailVerified: z.boolean().optional(),
 })
 
 export const loginSchema = z.object({

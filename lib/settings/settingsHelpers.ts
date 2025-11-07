@@ -1,6 +1,11 @@
 import bcrypt from 'bcryptjs'
 import { ZodType } from 'zod'
-import { getUserById } from './settingsRepository'
+import {
+  findUserByVerificationToken,
+  getUserById,
+  verifyUserEmail,
+} from './settingsRepository'
+import { updateSessionWithVerified } from '../auth/authServices'
 
 // Função validate genérica
 export function validate<T>(schema: ZodType<T>, data: unknown): T {
@@ -24,12 +29,25 @@ export async function getUserOrFail(userId: number) {
   return user
 }
 
-// Funções de auth
-export async function verifyPassword(plain: string, hash: string) {
-  const valid = await bcrypt.compare(plain, hash)
-  if (!valid) throw new Error('Password incorreta')
-}
-
 export async function hashPassword(password: string) {
   return await bcrypt.hash(password, 10)
+}
+
+export async function verifyEmailService(token: string) {
+  const user = await findUserByVerificationToken(token)
+  if (!user) {
+    throw new Error('Token inválido ou expirado')
+  }
+
+  await verifyUserEmail(user.id)
+
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    emailVerified: true,
+  }
+
+  await updateSessionWithVerified(safeUser)
+  return safeUser
 }

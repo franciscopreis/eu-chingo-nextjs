@@ -8,13 +8,9 @@ import {
   setVerificationToken,
   findUserByVerificationToken,
   verifyUserEmail,
+  getUserById,
 } from './settingsRepository'
-import {
-  validate,
-  verifyPassword,
-  hashPassword,
-  getUserOrFail,
-} from './settingsHelpers'
+import { validate, hashPassword, getUserOrFail } from './settingsHelpers'
 import {
   emailSchema,
   passwordSchema,
@@ -23,7 +19,10 @@ import {
 } from './settingsSchemas'
 
 import sendgrid from '@sendgrid/mail'
-import { generateVerificationToken } from '../auth/authHelpers'
+import {
+  comparePasswords,
+  generateVerificationToken,
+} from '../auth/authHelpers'
 import { encrypt, setSession } from '../auth/session'
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY!)
@@ -40,7 +39,7 @@ export async function changeEmailService(
   if (existing) throw new Error('Já existe uma conta com esse email')
 
   const user = await getUserOrFail(userId)
-  await verifyPassword(password, user.password)
+  await comparePasswords(password, user.password)
 
   await updateEmail(userId, newEmail)
   return { success: true }
@@ -55,7 +54,7 @@ export async function changePasswordService(
   validate(passwordSchema, newPassword)
 
   const user = await getUserOrFail(userId)
-  await verifyPassword(currentPassword, user.password)
+  await comparePasswords(currentPassword, user.password)
 
   const newHash = await hashPassword(newPassword)
   await updatePassword(userId, newHash)
@@ -98,7 +97,7 @@ export async function changeNameService(
   validate(nameSchema, newName)
 
   const user = await getUserOrFail(userId)
-  await verifyPassword(password, user.password)
+  await comparePasswords(password, user.password)
 
   await updateName(userId, newName)
   return { success: true }
@@ -148,16 +147,23 @@ export async function verifyEmailService(token: string) {
     throw new Error('Token inválido ou expirado')
   }
 
+  // Atualiza o estado de verificação na DB
   await verifyUserEmail(user.id)
 
+  // Reobtem o utilizador atualizado da DB
+  const updatedUser = await getUserById(user.id)
+  if (!updatedUser)
+    throw new Error('Utilizador não encontrado após atualização')
+
+  // Atualiza a sessão com os dados corretos
   const newSession = await encrypt({
-    userId: user.id,
-    email: user.email,
-    name: user.name,
-    emailVerified: true,
+    userId: updatedUser.id,
+    email: updatedUser.email,
+    name: updatedUser.name ?? undefined, // <-- converte null em undefined
+    emailVerified: Boolean(updatedUser.emailVerified),
   })
 
   await setSession(newSession)
 
-  return user
+  return updatedUser
 }

@@ -10,7 +10,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-stone-900 border-b">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-stone-900 border-b lg:opacity-95 lg:hover:opacity-100">
       <div className="max-w-7xl mx-auto p-4 py-2 flex items-center justify-between">
         <div className="lg:w-1/4">
           <Logo />

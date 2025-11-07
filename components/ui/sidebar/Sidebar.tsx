@@ -7,7 +7,7 @@ type SidebarProps = {
 
 export default function Sidebar({ links, activePath }: SidebarProps) {
   return (
-    <aside className="hidden md:flex md:flex-col md:w-60 xl:w-64">
+    <aside className="hidden md:flex md:flex-col md:w-60 xl:w-64 opacity-65 hover:opacity-100">
       <div className="sticky top-30 px-3 flex flex-col space-y-2">
         {links.map((link) => {
           const isActive =

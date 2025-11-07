@@ -1,9 +1,9 @@
-import Tutorial from '@/components/tutorial/Tutorial'
+import Reading from '@/components/reading/Reading'
 
 export default function TutorialPage() {
   return (
     <main className="page-content mt-5 lg:mt-0">
-      <Tutorial />
+      <Reading />
     </main>
   )
 }

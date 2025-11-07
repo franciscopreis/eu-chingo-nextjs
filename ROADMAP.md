@@ -40,7 +40,7 @@ _Next on my list_
 
 ## 💭 **Future Possibilities**
 
-_Ideas I dreamed about_
+_Ideas I spend too much time thinking about_
 
 - **Community features**: Discuss interpretations, and even translations, with others
 - **Reading reminders**: Email follow-ups on significant readings to help people evaluate their past readings

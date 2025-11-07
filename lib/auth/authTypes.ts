@@ -11,7 +11,7 @@ export type SafeUser = {
   id: number
   email: string
   name?: string
-  welcomeEmailSent?: boolean
+
   emailVerified?: boolean
 }
 

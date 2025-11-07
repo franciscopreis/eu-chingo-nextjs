@@ -1,12 +1,4 @@
-'use client'
-
 import { useState } from 'react'
-import AccordionItem from '../ui/AccordionItem'
-import ChangePasswordForm from './ChangePasswordForm'
-import ChangeEmailForm from './ChangeEmailForm'
-import ContactForm from './ContactForm'
-import DeleteAccount from './DeleteAccount'
-import Link from 'next/link'
 import Image from 'next/image'
 import DonateButton from './DonateButton'
 

@@ -1,4 +1,6 @@
-// app/blog/[slug]/page.tsx
+// Estilos e performance revistos
+//
+
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -13,6 +15,7 @@ import CoinAccordion from '@/components/blog/accordions/CoinAccordion'
 import CoinTable from '@/components/blog/tables/CoinTable'
 import YarrowStalkAccordion from '@/components/blog/accordions/YarrowStalkAccordion'
 import YarrowStalkTable from '@/components/blog/tables/YarrowStalkTable'
+import Image from 'next/image'
 
 const components = {
   TrigramTable,
@@ -23,18 +26,18 @@ const components = {
   CoinAccordion,
 }
 
-// ⚙️ Gera os caminhos estáticos
+// Gerar caminhos estáticos
 export async function generateStaticParams() {
   return getAllPostSlugs()
 }
 
-// ⚙️ Página individual
+// Publicações individuais
 export default async function BlogPostPage({ params }: any) {
   const { meta, content } = await getPostBySlug(params.slug)
 
   return (
-    <article className="mx-auto p-3 mt-2  prose prose-lg dark:prose-invert text-justify border rounded-2xl px-6 pb-6 md:px-8 md:pb-8">
-      {/* 🔹 Header do Post */}
+    <article className="mx-auto mt-2 prose prose-lg dark:prose-invert text-justify border rounded-2xl px-6 py-6 md:px-8 md:pb-8">
+      {/* 🔹 Header */}
       <header className="mb-6">
         <div className="flex items-center mb-4">
           <Link
@@ -71,18 +74,20 @@ export default async function BlogPostPage({ params }: any) {
         </div>
       </header>
 
-      {/* 🔹 Imagem principal */}
+      {/* Imagem */}
       {meta.image && (
         <div className="">
-          <img
+          <Image
             src={meta.image}
             alt={meta.title}
+            width={800}
+            height={400}
             className="rounded-xl w-full min-w-0 h-80 lg:h-128 object-contain object-top "
           />
         </div>
       )}
 
-      {/* 🔹 Conteúdo MDX */}
+      {/* Conteúdo MDX */}
       <MDXRemote
         components={components}
         source={content}

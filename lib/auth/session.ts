@@ -11,6 +11,13 @@ export type CurrentUser = {
   emailVerified: boolean
 } | null
 
+type SessionPayload = {
+  userId: number
+  email: string
+  name?: string
+  emailVerified?: boolean
+}
+
 const SESSION_DURATION = '7d'
 const MAX_AGE = 60 * 60 * 24 * 7 // 7 dias
 
@@ -20,12 +27,6 @@ if (!secretKey) throw new Error('SESSION_SECRET não definida')
 const encodedKey = new TextEncoder().encode(secretKey)
 
 // 🧩 Tipagem do payload que vai dentro do JWT
-type SessionPayload = {
-  userId: number
-  email: string
-  name: string
-  emailVerified?: boolean
-}
 
 // Criar token JWT
 export async function encrypt(payload: SessionPayload) {
@@ -103,9 +104,4 @@ export async function getCurrentUser(): Promise<CurrentUser> {
     console.error('[getCurrentUser] Error fetching user', err)
     return null
   }
-}
-
-// Logout
-export async function logoutUser() {
-  await setSession('')
 }

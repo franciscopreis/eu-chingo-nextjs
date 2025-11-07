@@ -74,7 +74,7 @@ This project was my deep dive into full-stack development, where I discovered:
 
 ## 🗺️ Roadmap
 
-Curious about what's next? Check out our [development roadmap](ROADMAP.md) to see the features we're excited to build!
+Check out our [development roadmap](ROADMAP.md) to see the features I'm planning to make (if I have time)
 
 ---
 

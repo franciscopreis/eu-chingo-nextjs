@@ -1,21 +1,17 @@
-// app/api/auth/me/route.ts
-import { NextResponse } from 'next/server'
-import { getCurrentUser } from '@/lib/auth/session'
+import { getCurrentUserFromDB } from '@/lib/auth/authServices'
+import { successResponse, errorResponse } from '@/lib/utils/responses'
 
 export async function GET() {
   try {
-    const user = await getCurrentUser()
+    const user = await getCurrentUserFromDB()
 
     if (!user) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+      return errorResponse('Não autenticado', 401)
     }
 
-    return NextResponse.json(user)
-  } catch (error) {
-    console.error('Error in /api/auth/me:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return successResponse(user, 200)
+  } catch (err) {
+    console.error('[api/auth/me] Erro:', err)
+    return errorResponse('Erro de servidor', 500)
   }
 }
