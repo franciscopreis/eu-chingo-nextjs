@@ -1,7 +1,3 @@
-// Em dev uso better-sqlite3 (como aqui vou à db preciso de manter)
-// Eventualmente passar tudo para Turso e remover runtime
-export const runtime = 'nodejs'
-
 import { successResponse, errorResponse } from '@/lib/utils/responses'
 import {
   validateReadingInput,

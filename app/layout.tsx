@@ -40,7 +40,7 @@ export default async function RootLayout({
       className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors font-sans">
+      <body className="flex flex-col bg-white dark:bg-stone-900 text-stone-900 dark:text-gray-200 transition-colors font-sans min-h-screen">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

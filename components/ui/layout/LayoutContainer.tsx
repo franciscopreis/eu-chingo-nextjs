@@ -8,7 +8,7 @@ type LayoutContainerProps = {
 
 export default function LayoutContainer({ children }: LayoutContainerProps) {
   return (
-    <div className="w-full max-w-7xl mx-auto transition-colors relative flex flex-col md:flex-row gap-4 min-h-screen">
+    <div className="w-full max-w-7xl mx-auto transition-colors relative flex flex-col md:flex-row gap-4 min-h-[100dvh]">
       {children}
     </div>
   )

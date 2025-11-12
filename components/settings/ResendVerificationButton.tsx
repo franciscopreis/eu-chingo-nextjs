@@ -48,7 +48,7 @@ export default function ResendVerificationButton({
   }
 
   return (
-    <div className="flex flex-col justify-center mt-4 mx-auto gap-2">
+    <div className="flex flex-col justify-center mt-4 mx-auto gap-2 text-sm">
       <Button
         text={
           emailVerified

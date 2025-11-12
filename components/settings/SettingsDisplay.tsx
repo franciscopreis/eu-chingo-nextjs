@@ -43,7 +43,7 @@ export default function SettingsDisplay() {
   }, [open])
 
   return (
-    <>
+    <div className="">
       {/* imagem decorativa */}
       <div className="relative w-full -top-3 h-100 lg:h-[350px]">
         <Image
@@ -153,7 +153,7 @@ export default function SettingsDisplay() {
           </AccordionItem>
         </div>
         <div className="flex flex-col gap-2 border-bottom">
-          <h3 className="h3-title pl-2">Ajuda</h3>{' '}
+          <h3 className="h3-title pl-2">Doações</h3>{' '}
           <AccordionItem
             ref={(el) => {
               sectionRefs.current['donation'] = el
@@ -165,7 +165,7 @@ export default function SettingsDisplay() {
             <Donation />
           </AccordionItem>
         </div>
-        <div className="flex flex-col gap-2 border-bottom">
+        <div className="flex flex-col gap-2 border-bottom mb-100 md:mb-10">
           <h3 className="h3-title pl-2">Apagar</h3>
           <AccordionItem
             ref={(el) => {
@@ -179,6 +179,7 @@ export default function SettingsDisplay() {
           </AccordionItem>
         </div>
       </div>
-    </>
+      <div className="h-500px"></div>
+    </div>
   )
 }

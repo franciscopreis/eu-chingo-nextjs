@@ -85,7 +85,7 @@ export default function ReadingDisplay({ isGuest = false }) {
       {user && (
         <div className="relative w-full h-70 lg:h-[250px]">
           <Image
-            src="/images/used/snake-crop.svg"
+            src="/images/used/snake-crop.png"
             alt="Imagem de uma cobra"
             fill
             priority

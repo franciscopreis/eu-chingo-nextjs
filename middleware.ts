@@ -45,5 +45,4 @@ export const config = {
     '/historico/:path*',
     '/tabelas/:path*',
   ],
-  runtime: 'nodejs',
 }
